@@ -26,7 +26,6 @@ function isMAC48Address(n) {
     }
   }
   return true;
-  // remove line with error and write your code here
 }
 module.exports = {
   isMAC48Address

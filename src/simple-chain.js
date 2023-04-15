@@ -5,25 +5,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+  arrOfValues: [],
+  chain: '',
   getLength() {
-    throw new NotImplementedError('Not implemented');
+    return this.arrOfValues.length;
+    // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    let myValue = '';
+    if (value !== undefined) {
+      myValue = value;
+    }
+    if (this.length === 0) {
+      chain = `( ${myValue} )`;
+      this.arrOfValues.push(myValue);
+    } else {
+      this.chain += `~~( ${myValue} )`;
+      this.arrOfValues.push(myValue);
+    }
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (typeof position === 'number' && Number.isInteger(position) && position > 0 && position <= this.arrOfValues.length) {
+      this.arrOfValues.splice(position - 1, 1);
+      this.chain = '';
+      for (let element of this.arrOfValues) {
+        this.chain += `( ${element} )~~`
+      }
+      this.chain = this.chain.slice(0, this.chain.length - 2)
+      return this;
+    } else {
+      this.arrOfValues = [];
+      this.chain = '';
+      throw new Error("You can't remove incorrect link!");
+    }
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.arrOfValues = this.arrOfValues.reverse();
+    this.chain = '';
+    for (let element of this.arrOfValues) {
+      this.chain += `( ${element} )~~`;
+    }
+    this.chain = this.chain.slice(0, this.chain.length - 2);
+    return this
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let currentChain = this.chain;
+    this.arrOfValues = [];
+    this.chain = '';
+    return currentChain
   }
 };
 
